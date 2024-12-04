@@ -198,11 +198,24 @@ void Libro::modificarStock(int modificador)
 void Libro::prestarLibro(string nombrePersona)
 {
     //Si el stock es 1 o mas resta uno al stock y añade el nombre de la persona a la que fue prestado el libro al vector que guarda quienes han rentado este libro.
+    string texto=" (Virtual)";
+    size_t posicion = nombrePersona.find(texto);
     if(getStock() > 0)
     {
-        modificarStock(-1);
-        cout << "El libro " << getTitulo() << " ha sido prestado con exito a " << nombrePersona << "."<< endl;
-        añadirNombrePrestado(nombrePersona);
+        //Si es que nombrePersona contiene " (Virtual)" va a añadir ese texto al vector nombrePersona, para consiguiente eliminar el " (Virtual)" de la cadena de texto para mostrar en pantalla el nombre sin " (Virtual)" en el
+        if(nombrePersona.find(" (Virtual)") != string::npos)
+        {
+            añadirNombrePrestado(nombrePersona);
+            nombrePersona.erase(posicion, texto.length());
+            cout << "El libro " << getTitulo() << " ha sido prestado con exito a " << nombrePersona << "."<< endl;
+        }
+        //Si no se presta de manera virtual, va a hacer lo mismo de siempre.
+        else
+        {
+            modificarStock(-1);
+            cout << "El libro " << getTitulo() << " ha sido prestado con exito a " << nombrePersona << "."<< endl;
+            añadirNombrePrestado(nombrePersona);
+        }
         librosPrestados+=1;
     }
     else cout << "No quedan existencias de este libro." << endl;
@@ -210,12 +223,23 @@ void Libro::prestarLibro(string nombrePersona)
 
 void Libro::devolverLibro(string nombrePersona)
 {
+    string texto=" (Virtual)";
+    size_t posicion = nombrePersona.find(texto);
     //Si es que la lista de personas que han pedido el libro prestado no tiene elementos no deja devolver el libro, si en cambio la lista tiene al menos un elemento si deja.
     if(nombrePrestado.size() > 0)
     {
-        modificarStock(1);
-        cout << "El libro " << getTitulo() << " ha sido devuelto con exito por parte de " << nombrePersona << "."<< endl;
-        nombrePrestado.erase(find(nombrePrestado.begin(), nombrePrestado.end(), nombrePersona));
+        if(nombrePersona.find(" (Virtual)") != string::npos)
+        {
+            nombrePrestado.erase(find(nombrePrestado.begin(), nombrePrestado.end(), nombrePersona));
+            nombrePersona.erase(posicion, texto.length());
+            cout << "El libro " << getTitulo() << " ha sido devuelto con exito por parte de " << nombrePersona << "."<< endl;
+        }
+        else
+        {
+            modificarStock(1);
+            cout << "El libro " << getTitulo() << " ha sido devuelto con exito por parte de " << nombrePersona << "."<< endl;
+            nombrePrestado.erase(find(nombrePrestado.begin(), nombrePrestado.end(), nombrePersona));
+        }
         librosPrestados-=1;
     }
     else cout << "No se puede devolver un libro que no ha sido prestado." << endl;

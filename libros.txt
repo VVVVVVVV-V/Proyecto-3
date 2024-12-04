@@ -1,5 +1,5 @@
 El Principito,Antoine de Saint-Exupery,Salamandra,1943,Novela,Espanol,0,95,18,1,0,
 Cartas en el Asunto,Terry Pratchett,Debolsillo,2001,Ciencia Ficcion,Espanol,1,400,2,1,0,
 Harry Potter: La Piedra Filosofal,J.K Rowling,Planeta,1990,Fantasia,Espanol,2,300,3,1,0,
-El Color de la Magia,Terry Pratchett,Debolsillo,1983,Ciencia Ficcion,Espanol,3,285,3,1,0,
+El Color de la Magia,Terry Pratchett,Debolsillo,1983,Ciencia Ficcion,Espanol,3,285,2,1,0,
 La Luz Fantastica,Terry Pratchett,Debolsillo,1986,Ciencia Ficcion,Espanol,4,277,4,1,0,
