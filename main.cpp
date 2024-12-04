@@ -345,7 +345,6 @@ int main(int argc, char const *argv[])
         {
             controlador_prestamo=false;
             controlador_aux=0;
-            //int revisor = 0;
             //Si la lista de usuarios no esta vacia.
             if(!usuarios.empty())
             {
@@ -383,7 +382,6 @@ int main(int argc, char const *argv[])
                                     //Guarda el index del titulo del libro que se quiere devolver
                                     controlador_aux_prestamo=j;
                                     //Se define el revisor en 1, asi el prestamo sera efectivo.
-                                    //revisor=1;
                                 }
                             }
                         }
@@ -394,7 +392,6 @@ int main(int argc, char const *argv[])
                         biblioteca[controlador_aux_prestamo].devolverLibro(usuarios[i].getNombre());
                         usuarios[i].eliminarLibros(biblioteca[controlador_aux_prestamo].getTitulo());
                         pulsaEnter();
-                        //Revisor se define en 0 para que el bucle no vuelva a esta parte
                         break;
                     }
                 }
