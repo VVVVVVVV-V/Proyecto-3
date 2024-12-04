@@ -41,20 +41,20 @@ void check_register();
     - Devolver libro
 */
 void register_new_book(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_title(std::vector<string>& registro, Libro& libro);
-void register_edit_book_author(std::vector<string>& registro, Libro& libro);
-void register_edit_book_genre(std::vector<string>& registro, Libro& libro);
-void register_edit_book_language(std::vector<string>& registro, Libro& libro);
-void register_edit_book_id(std::vector<string>& registro, Libro& libro);
-void register_edit_book_pages_number(std::vector<string>& registro, Libro& libro);
-void register_edit_book_publisher(std::vector<string>& registro, Libro& libro);
-void register_edit_book_release_year(std::vector<string>& registro, Libro& libro);
-void register_edit_stock(std::vector<string>& registro, Libro& libro);
+void register_edit_book_title(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_author(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_genre(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_language(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_id(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_pages_number(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_publisher(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_release_year(std::vector<std::string>& registro, Libro& libro);
+void register_edit_stock(std::vector<std::string>& registro, Libro& libro);
 
 
 void register_new_user(std::vector<std::string>& registro, Usuario& user);
-void register_edit_user_name(std::vector<string>& registro, Usuario& user);
-void register_edit_user_rut(std::vector<string>& registro, Usuario& user);
+void register_edit_user_name(std::vector<std::string>& registro, Usuario& user);
+void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user);
 
 
 void register_lend_book(std::vector<std::string>& registro, Libro& libro);

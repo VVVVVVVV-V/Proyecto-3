@@ -85,7 +85,7 @@ void mostrarUsuariosPrestados(vector<Usuario> nombreVector)
         {
             if(!nombreVector[i].getLibroSolicitadoEmpty())
             {
-                cout << i+1 << ") " << nombreVector[i].getNombre() << endl;
+                cout << "- " << nombreVector[i].getNombre() << endl;
                 aux=true;
             }
             
@@ -280,14 +280,15 @@ int main(int argc, char const *argv[])
                                         else controlador_prestamo=true;    
                                     }
                                     //Si el controlador prestamo es verdadero
-                                    if(controlador_prestamo)
-                                    {
-                                        //El libro registra que fue prestado al usuario, y el usuario registra que tiene el libro.
-                                        biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre());
-                                        usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo());
-                                        cout << "Prestamo realizado con exito!" << endl;
-                                        pulsaEnter();
-                                    }
+                                    
+                                }
+                                if(controlador_prestamo)
+                                {
+                                    //El libro registra que fue prestado al usuario, y el usuario registra que tiene el libro.
+                                    biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre());
+                                    usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo());
+                                    cout << "Prestamo realizado con exito!" << endl;
+                                    pulsaEnter();
                                 }
                             }
                             //Si el valor ingresado el el controlador_aux no es valido como index entonces el prestamo pasa a ser falso.
@@ -343,6 +344,8 @@ int main(int argc, char const *argv[])
         else if(controlador == 4)
         {
             controlador_prestamo=false;
+            controlador_aux=0;
+            //int revisor = 0;
             //Si la lista de usuarios no esta vacia.
             if(!usuarios.empty())
             {
@@ -379,6 +382,8 @@ int main(int argc, char const *argv[])
                                     controlador_prestamo=true;
                                     //Guarda el index del titulo del libro que se quiere devolver
                                     controlador_aux_prestamo=j;
+                                    //Se define el revisor en 1, asi el prestamo sera efectivo.
+                                    //revisor=1;
                                 }
                             }
                         }
@@ -389,6 +394,8 @@ int main(int argc, char const *argv[])
                         biblioteca[controlador_aux_prestamo].devolverLibro(usuarios[i].getNombre());
                         usuarios[i].eliminarLibros(biblioteca[controlador_aux_prestamo].getTitulo());
                         pulsaEnter();
+                        //Revisor se define en 0 para que el bucle no vuelva a esta parte
+                        break;
                     }
                 }
                 //Si el prestamo es falso dira que no se ha podido realizar la devolucion.
