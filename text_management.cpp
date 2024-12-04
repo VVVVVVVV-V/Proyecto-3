@@ -22,6 +22,9 @@ void read_txt(vector<Libro>& biblioteca, string filename)
     ifstream file(filename);
     // Se define un string para guardar las lineas del archivo
     string line;
+    // Definimos un auxiliar para ir guardando los libros solicitados
+    // y posteriormente añadirlos a un vector
+    string aux;
     // Se verifica si el archivo se abrió correctamente
     if (file.is_open()) {
 
@@ -33,6 +36,9 @@ void read_txt(vector<Libro>& biblioteca, string filename)
             stringstream ss(line);
             // Definimos strings para guardar los datos de las lineas
             string titulo, autor, editorial, anio_str, genero, idioma, id_str, paginas_str, stock_str, disponibilidad_str, libros_prestados_str;
+
+            // Definimos un vector para guardar a los usuarios que han solicitado un libro
+            vector<string> usuarios_prestado;
             // Definimos un entero para guardar el número de páginas
             int paginas, anio, id, stock, libros_prestados;
 
@@ -100,8 +106,16 @@ void read_txt(vector<Libro>& biblioteca, string filename)
             getline(ss, libros_prestados_str, ',');
             libros_prestados = stoi(libros_prestados_str);
 
+            // Se sigue leyendo desde donde se quedó la última vez descartando la ","
+            // el bucle revisa el resto de la línea y separa los usuarios que han solicitado
+            // un libro en aux y los agrega al vector libros_solicitados separando por "]"
+            while (getline(ss, aux, ']')) {
+                usuarios_prestado.push_back(aux);
+            }
+            
+
             // Crear un objeto Libro y lo agrega al vector
-            biblioteca.push_back(Libro(titulo, autor, editorial, anio, genero, idioma, id, paginas, stock, disponibilidad, libros_prestados));
+            biblioteca.push_back(Libro(titulo, autor, editorial, anio, genero, idioma, id, paginas, stock, disponibilidad, libros_prestados, usuarios_prestado));
         }
         file.close();
     } 
@@ -115,15 +129,26 @@ void rewrite_txt(std::vector<Libro>& biblioteca, std::string filename)
 {
     // Abre un archivo de salida dado en filename
     ofstream file(filename);
-    int i;
+    int i, j;
     string line = "";
     int length = biblioteca.size();
+    
 
     // Recorre todos los libros en la biblioteca
     for (i = 0; i < length; i++)
     {
+        int vector_user_length = biblioteca[i].getNombrePrestadoSize();
         // Construye una línea con el título, autor, editorial, año de publicación, género, idioma, id, número de páginas, stock y disponibilidad de cada libro
-        line = line + biblioteca[i].getTitulo() + "," + biblioteca[i].getAutor() + "," + biblioteca[i].getEditorial() + "," + to_string(biblioteca[i].getAnioDePublicacion()) + "," + biblioteca[i].getGenero() + "," + biblioteca[i].getIdioma() + "," + to_string(biblioteca[i].getId()) + "," + to_string(biblioteca[i].getNumeroPaginas()) + "," + to_string(biblioteca[i].getStock()) + "," + to_string(biblioteca[i].getDisponibilidad()) + "," + to_string(biblioteca[i].getLibrosPrestados()) + "\n";
+        line = line + biblioteca[i].getTitulo() + "," + biblioteca[i].getAutor() + "," + biblioteca[i].getEditorial() + "," + to_string(biblioteca[i].getAnioDePublicacion()) + "," + biblioteca[i].getGenero() + "," + biblioteca[i].getIdioma() + "," + to_string(biblioteca[i].getId()) + "," + to_string(biblioteca[i].getNumeroPaginas()) + "," + to_string(biblioteca[i].getStock()) + "," + to_string(biblioteca[i].getDisponibilidad()) + "," + to_string(biblioteca[i].getLibrosPrestados()) + ",";
+
+        // Recorremos el vector de los usuarion que han solicitado el libro y los vamos concatenando
+        // a la linea que se escribira en el .txt
+        for (j = 0; j < vector_user_length; j++) {
+            line = line + biblioteca[i].getNombrePrestadoPorIndex(j) + "]";
+        }
+        
+        // Terminamos la linea con un salto de linea para que pase a la siguiente línea
+        line = line + "\n";
     }
 
     // Verifica si el archivo se abrió correctamente
@@ -237,10 +262,7 @@ void rewrite_users(vector<Usuario>& lista, string filename)
 }
 
 string get_current_date()
-{
-    //Crea una estructura de "Datetime"
-    struct tm date;
-    
+{    
     //Crea una "timestamp" con la fecha y hora actual
     time_t current_time = time(0);
 
@@ -260,10 +282,7 @@ string get_current_date()
 }
 
 string get_current_hour()
-{
- //Crea una estructura de "Datetime"
-    struct tm date;
-    
+{    
     //Crea una "timestamp" con la fecha y hora actual
     time_t current_time = time(0);
 

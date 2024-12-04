@@ -221,7 +221,7 @@ int main(int argc, char const *argv[])
 
         }
 
-
+        //
         //PRESTAR LIBROS
         else if(controlador == 3)
         {
@@ -244,58 +244,99 @@ int main(int argc, char const *argv[])
                         
                         limpiarPantalla();
                         //Imprime que el libro esta disponible y muestra una lista de usuarios.
-                        cout << "Libro disponible!" << endl << "----------------------------" << endl;
-                        mostrarUsuarios(usuarios);
-                       //Pregunta quien quiere pedir prestado el libro
-                        cout << endl << "Que usuario desea pedir prestado este libro?" << endl << "> ";
+                        cout << "Libro disponible!" << endl << "----------------------------" << endl << "¿Desea pedir el libro de manera virtual o fisica?" << endl << "1) Fisica" << endl << "2) Digital" << endl << "> ";
                         cin >> controlador_aux;
-                        //Verifica si es que el valor ingresado por el usuario es un index valido en la lista de usuarios.
-                        if(controlador_aux <= usuarios.size() && controlador_aux > 0)
+                        //Si es que se quiere pedir prestado un libro fisico
+                        if(controlador_aux == 1)
                         {
-                            //Verifica que la lista de nombres del libro no tenga elementos
-                            if(biblioteca[i].nombrePrestadoEmpty())
+                            limpiarPantalla();
+                            mostrarUsuarios(usuarios);
+                            //Pregunta quien quiere pedir prestado el libro
+                            cout << endl << "Que usuario desea pedir prestado este libro?" << endl << "> ";
+                            cin >> controlador_aux;
+                            //Verifica si es que el valor ingresado por el usuario es un index valido en la lista de usuarios.
+                            if(controlador_aux <= usuarios.size() && controlador_aux > 0)
                             {
-                                //Cuando pasa esto, el programa pasa directamente a realizar el prestamo del libro
-                                controlador_prestamo=true;
-                            }
-                            else
-                            {
-                                //Verifica que la persona que quiera pedir no lo tenga prestado
-                                for (int j = 0; j < biblioteca[i].getNombrePrestadoSize(); j++)
+                                //Verifica que la lista de nombres del libro no tenga elementos
+                                if(biblioteca[i].nombrePrestadoEmpty())
                                 {
-                                //Si es que el usuario esta registrado en las personas que han alquilado el libro
-                                if(usuarios[controlador_aux-1].getNombre() == biblioteca[i].getNombrePrestadoPorIndex(j))
+                                    //Cuando pasa esto, el programa pasa directamente a realizar el prestamo del libro
+                                    controlador_prestamo=true;
+                                }
+                                
+                                else
+                                {
+                                    //Verifica que la persona que quiera pedir no lo tenga prestado
+                                    for (int j = 0; j < biblioteca[i].getNombrePrestadoSize(); j++)
                                     {
-                                    //Pasa por pantalla que el usuario no puede pedir el prestamo y hace la variable controlador_prestamo falsa.
-                                    cout << "Este usuario no puede pedir prestado este libro puesto que ya tiene una copia en su poder." << endl;
-                                    controlador_prestamo=false;
+                                        //Si es que el usuario esta registrado en las personas que han alquilado el libro
+                                        if(usuarios[controlador_aux-1].getNombre() == biblioteca[i].getNombrePrestadoPorIndex(j))
+                                        {
+                                        //Pasa por pantalla que el usuario no puede pedir el prestamo y hace la variable controlador_prestamo falsa.
+                                            cout << "Este usuario no puede pedir prestado este libro puesto que ya tiene una copia en su poder." << endl;
+                                            controlador_prestamo=false;
+                                        }
+                                        //Si el usuaro no esta registrado en las personas que han alquilado el libro, controlador_prestamo es verdadero.
+                                        else controlador_prestamo=true;    
                                     }
-                                //Si el usuaro no esta registrado en las personas que han alquilado el libro, controlador_prestamo es verdadero.
-                                else controlador_prestamo=true;    
+                                    //Si el controlador prestamo es verdadero
+                                    if(controlador_prestamo)
+                                    {
+                                        //El libro registra que fue prestado al usuario, y el usuario registra que tiene el libro.
+                                        biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre());
+                                        usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo());
+                                        cout << "Prestamo realizado con exito!" << endl;
+                                        pulsaEnter();
+                                    }
                                 }
                             }
-                            //Si el controlador prestamo es verdadero
-                            if(controlador_prestamo)
-                            {
-                                //El libro registra que fue prestado al usuario, y el usuario registra que tiene el libro.
-                                biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre());
-                                usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo());
-                                cout << "Prestamo realizado con exito!" << endl;
-                                pulsaEnter();
-                            }
+                            //Si el valor ingresado el el controlador_aux no es valido como index entonces el prestamo pasa a ser falso.
+                            else controlador_prestamo=false;
                         }
-                        //Si el valor ingresado el el controlador_aux no es valido como index entonces el prestamo pasa a ser falso.
-                        else controlador_prestamo=false;
+                        //Si es que el libro es virtual
+                        else if(controlador_aux==2)
+                        {
+                            mostrarUsuarios(usuarios);
+                            //Pregunta quien quiere pedir prestado el libro
+                            cout << endl << "Que usuario desea pedir prestado este libro?" << endl << "> ";
+                            cin >> controlador_aux;
+                            
+                            if(controlador_aux <= usuarios.size() && controlador_aux > 0)
+                            {
+                                //Si el libro no ha sido prestado a nadie automaticamente sera verdadero el prestamo
+                                if(biblioteca[i].nombrePrestadoEmpty())
+                                {
+                                    controlador_prestamo=true;
+                                }
+                                else
+                                {
+
+                                }
+                            }
+
+                        }
+                        //Si no es una opcion valida
+                        else
+                        {
+
+                        }        
+                    //Si no se encuentra el libro en la biblioteca.
                     }
+                
                 }
                 //Si el controlador del prestamo es falso, retorna que el usuario o libro no se encontraban disponibles.
                 if(controlador_prestamo==false)
                 {
                     cout << "----------------------------------------" << endl << "Prestamo no realizado." << endl;
-                    pulsaEnter();
-                }
-                  
+                    
+                }    
             }
+            //Lo que pasa si es que la bibloteca o usuarios estan vacios
+            else
+            {
+                cout << "No hay libros o no hay usuarios...";
+            }
+            pulsaEnter();
         }
 
         //DEVOLVER LIBROS
@@ -576,12 +617,13 @@ int main(int argc, char const *argv[])
                                 cin >> nNumeroPaginas;
                                 biblioteca[i].setNumeroPaginas(nNumeroPaginas);
                                 break;
-                                //Si es que se ingresa una opcion que no sea valida
+                            //Nueva cantidad de stock
                             case 9:
                                 cout << "Ingrese el nuevo numero de Stock: " << endl << "> ";
                                 cin >> nStock;
                                 biblioteca[i].setStock(nStock);
                                 break;
+                            //En caso de una opcion invalida
                             default:
                                 cout << "Opcion invalida, saliendo del menu." << endl;
                                 break;

@@ -132,7 +132,7 @@ bool Libro::getDisponibilidad()
 
 int Libro::getLibrosPrestados()
 {
-    return(librosPrestados);
+    return(librosPrestados); //Retorna la cantidad de ese libro que ha sido prestado
 };
 
 //FUNCIONES DEL VECTOR NOMBREPRESTADO
