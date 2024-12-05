@@ -244,7 +244,7 @@ int main(int argc, char const *argv[])
                         
                         limpiarPantalla();
                         //Imprime que el libro esta disponible y muestra una lista de usuarios.
-                        cout << "Libro disponible!" << endl << "----------------------------" << endl << "¿Desea pedir el libro de manera virtual o fisica?" << endl << "1) Fisica" << endl << "2) Digital" << endl << "> ";
+                        cout << "Libro disponible!" << endl << "----------------------------" << endl << "Desea pedir el libro de manera virtual o fisica?" << endl << "1) Fisica" << endl << "2) Digital" << endl << "> ";
                         cin >> controlador_aux;
                         //Si es que se quiere pedir prestado un libro fisico
                         if(controlador_aux == 1)

@@ -228,12 +228,14 @@ void Libro::devolverLibro(string nombrePersona)
     //Si es que la lista de personas que han pedido el libro prestado no tiene elementos no deja devolver el libro, si en cambio la lista tiene al menos un elemento si deja.
     if(nombrePrestado.size() > 0)
     {
+        //Si se encuentran los caracteres " (Virtual)" en el nombre de la persona se va a eliminar de la lista, luego se eliminaran los caracteres de la cadena nombrePersona para mostrarlo en pantalla sin que diga " (Virtual)".
         if(nombrePersona.find(" (Virtual)") != string::npos)
         {
             nombrePrestado.erase(find(nombrePrestado.begin(), nombrePrestado.end(), nombrePersona));
             nombrePersona.erase(posicion, texto.length());
             cout << "El libro " << getTitulo() << " ha sido devuelto con exito por parte de " << nombrePersona << "."<< endl;
         }
+        //Si no lleva los caracteres " (Virtual)" se hara el proceso como si fuese un libro fisico.
         else
         {
             modificarStock(1);
