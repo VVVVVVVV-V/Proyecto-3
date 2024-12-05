@@ -664,6 +664,7 @@ void register_virtual_return_book(vector<string>& registro, Libro& libro, string
     file.close();
 }
 
+//Aun me faltan un par de funciones de user
 
 void register_new_user(vector<string>& registro, Usuario& user)
 {
