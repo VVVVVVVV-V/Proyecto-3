@@ -1,0 +1,38 @@
+Se ha editado el libro con ID"0" a las 16:5:47 con fecha 5-12-2024:
+Antiguo titulo: Le petit prince
+Nuevo titulo: El Principito
+---------------------------------
+Se ha editado el libro con ID"0" a las 16:6:38 con fecha 5-12-2024:
+Antiguo titulo: El Principito
+Nuevo titulo: Le Petit Prince
+---------------------------------
+Se ha registrado el usuario "Sebastian Garrido" con RUT 21.866.239-0 a las 16:7:54 con fecha 5-12-2024
+---------------------------------
+Se ha editado el libro con ID "1" a las 16:30:11 con fecha 5-12-2024:
+Antiguo genero: Ciencia Ficcion
+Nuevo genero: Ciencia ficcion, novela
+---------------------------------
+Se ha editado el libro con ID "0" a las 16:41:31 con fecha 5-12-2024:
+Antiguo titulo: Le Petit Prince
+Nuevo titulo: El Principito
+---------------------------------
+Se ha editado el libro con ID "0" (El Principito) a las 16:42:7 con fecha 5-12-2024:
+Antiguo autor: Antoine de Saint-Exupery
+Nuevo autor: Antoine de Saint Exuperi
+---------------------------------
+Se ha registrado el usuario "Yazmin Galleguillos" con RUT 21.740.663-3 a las 16:42:57 con fecha 5-12-2024
+---------------------------------
+Se ha registrado el usuario "" con RUT  a las 16:57:41 con fecha 5-12-2024
+---------------------------------
+Se ha solicitado el libro "El Principito (Virtual)" con ID 0 a las 17:5:12 con fecha 5-12-2024 por el usuario Cristobal Garrido.
+---------------------------------
+Se ha prestado el libro "El Principito" con ID 0 a las 17:6:29 con fecha 5-12-2024 al usuario Cristobal Garrido.
+---------------------------------
+Se ha prestado el libro "Cartas en el Asunto" con ID 1 a las 17:11:39 con fecha 5-12-2024 al usuario Sebastian Garrido.
+---------------------------------
+Se ha devuelto el libro "Cartas en el Asunto" con ID 1 a las 17:11:54 con fecha 5-12-2024 por el usuario Sebastian Garrido.
+---------------------------------
+Se ha solicitado el libro "Cartas en el Asunto (Virtual)" con ID 1 a las 17:12:12 con fecha 5-12-2024 por el usuario Sebastian Garrido.
+---------------------------------
+Se ha devuelto el libro "Cartas en el Asunto (Virtual)" con ID 1 a las 17:12:22 con fecha 5-12-2024 por el usuario Sebastian Garrido.
+---------------------------------

@@ -41,15 +41,15 @@ void check_register();
     - Devolver libro
 */
 void register_new_book(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_title(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_author(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_genre(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_language(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_id(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_pages_number(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_publisher(std::vector<std::string>& registro, Libro& libro);
-void register_edit_book_release_year(std::vector<std::string>& registro, Libro& libro);
-void register_edit_stock(std::vector<std::string>& registro, Libro& libro);
+void register_edit_book_title(std::vector<std::string>& registro, Libro& libro, std::string new_title);
+void register_edit_book_author(std::vector<std::string>& registro, Libro& libro, std::string new_author);
+void register_edit_book_genre(std::vector<std::string>& registro, Libro& libro, std::string new_genre);
+void register_edit_book_language(std::vector<std::string>& registro, Libro& libro, std::string new_language);
+void register_edit_book_id(std::vector<std::string>& registro, Libro& libro, std::string new_id);
+void register_edit_book_pages_number(std::vector<std::string>& registro, Libro& libro, std::string new_pages_number);
+void register_edit_book_publisher(std::vector<std::string>& registro, Libro& libro, std::string new_publisher);
+void register_edit_book_release_year(std::vector<std::string>& registro, Libro& libro, std::string new_release_year);
+void register_edit_book_stock(std::vector<std::string>& registro, Libro& libro, std::string new_stock);
 
 
 void register_new_user(std::vector<std::string>& registro, Usuario& user);
@@ -57,9 +57,11 @@ void register_edit_user_name(std::vector<std::string>& registro, Usuario& user);
 void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user);
 
 
-void register_lend_book(std::vector<std::string>& registro, Libro& libro);
-void register_return_book(std::vector<std::string>& registro, Libro& libro);
+void register_lend_book(std::vector<std::string>& registro, Libro& libro, std::string name);
+void register_virtual_lend_book(std::vector<std::string>& registro, Libro& libro, std::string name);
 
+void register_return_book(std::vector<std::string>& registro, Libro& libro, std::string name);
+void register_virtual_return_book(std::vector<std::string>& registro, Libro& libro, std::string name);
 
 
 #endif

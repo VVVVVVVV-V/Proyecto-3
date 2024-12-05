@@ -287,7 +287,11 @@ int main(int argc, char const *argv[])
                                     //El libro registra que fue prestado al usuario, y el usuario registra que tiene el libro.
                                     biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre());
                                     usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo());
+                                    register_lend_book(historial, biblioteca[i], usuarios[controlador_aux-1].getNombre());
                                     cout << "Prestamo realizado con exito!" << endl;
+                                    // Guardar en los archivos de texto
+                                    rewrite_txt(biblioteca, "libros.txt");
+                                    rewrite_users(usuarios, "usuarios.txt");
                                     
                                 }
                             }
@@ -333,7 +337,10 @@ int main(int argc, char const *argv[])
                                 {
                                     biblioteca[i].prestarLibro(usuarios[controlador_aux-1].getNombre()+" (Virtual)");
                                     usuarios[controlador_aux-1].añadirLibros(biblioteca[i].getTitulo()+" (Virtual)");
+                                    register_virtual_lend_book(historial, biblioteca[i], usuarios[controlador_aux-1].getNombre());
                                     cout << "Prestamo realizado con exito!" << endl;
+                                    rewrite_txt(biblioteca, "libros.txt");
+                                    rewrite_users(usuarios, "usuarios.txt");
                                     
                                 }
                             }
@@ -421,6 +428,10 @@ int main(int argc, char const *argv[])
                     {
                         biblioteca[controlador_aux_prestamo].devolverLibro(usuarios[i].getNombre());
                         usuarios[i].eliminarLibros(biblioteca[controlador_aux_prestamo].getTitulo());
+                        //Registra en el historial que el libro ha sido devuelto y reescribe los archivos de texto.
+                        register_return_book(historial, biblioteca[controlador_aux_prestamo], usuarios[i].getNombre());
+                        rewrite_txt(biblioteca, "libros.txt");
+                        rewrite_users(usuarios, "usuarios.txt");
                         pulsaEnter();
                         break;
                     }
@@ -428,6 +439,10 @@ int main(int argc, char const *argv[])
                     {
                         biblioteca[controlador_aux_prestamo].devolverLibro(usuarios[i].getNombre()+" (Virtual)");
                         usuarios[i].eliminarLibros(biblioteca[controlador_aux_prestamo].getTitulo()+" (Virtual)");
+                        //Registra en el historial que el libro ha sido devuelto y reescribe los archivos de texto.
+                        register_virtual_return_book(historial, biblioteca[controlador_aux_prestamo], usuarios[i].getNombre());
+                        rewrite_txt(biblioteca, "libros.txt");
+                        rewrite_users(usuarios, "usuarios.txt");
                         pulsaEnter();
                         break;
                     }
@@ -615,54 +630,63 @@ int main(int argc, char const *argv[])
                             case 1:
                                 cout << "Ingrese el nuevo titulo: " << endl << "> ";
                                 getline(cin, nTitulo);
+                                register_edit_book_title(historial, biblioteca[i], nTitulo);
                                 biblioteca[i].setTitulo(nTitulo);
                                 break;
                             //Nuevo autor
                             case 2:
                                 cout << "Ingrese el nuevo autor: " << endl << "> ";
                                 getline(cin, nAutor);
+                                register_edit_book_author(historial, biblioteca[i], nAutor);
                                 biblioteca[i].setAutor(nAutor);
                                 break;
                             //Nueva editorial
                             case 3:
                                 cout << "Ingrese la nueva Editorial: " << endl << "> ";
                                 getline(cin, nEditorial);
+                                register_edit_book_publisher(historial, biblioteca[i], nEditorial);
                                 biblioteca[i].setEditorial(nEditorial);
                                 break;
                             //Nuevo Anio de publicacion
                             case 4:
                                 cout << "Ingrese el nuevo anio de publicacion: " << endl << "> ";
                                 cin >> nAnioDePublicacion;
+                                register_edit_book_release_year(historial, biblioteca[i], to_string(nAnioDePublicacion));
                                 biblioteca[i].setAnioDePublicacion(nAnioDePublicacion);
                                 break;
                             //Nuevo genero
                             case 5:
                                 cout << "Ingrese el nuevo genero: " << endl << "> ";
                                 getline(cin, nGenero);
+                                register_edit_book_genre(historial, biblioteca[i], nGenero);
                                 biblioteca[i].setGenero(nGenero);
                                 break;
                             //Nuevo idioma
                             case 6:
                                 cout << "Ingrese el nuevo idioma: " << endl << "> ";
                                 getline(cin, nIdioma);
+                                register_edit_book_language(historial, biblioteca[i], nIdioma);
                                 biblioteca[i].setIdioma(nIdioma);
                                 break;
                             //Nuevo ID
                             case 7:
                                 cout << "Ingrese el nuevo Id: " << endl << "> ";
                                 cin >> nId;
+                                register_edit_book_id(historial, biblioteca[i], to_string(nId));
                                 biblioteca[i].setId(nId);
                                 break;
                             //Nuevo numero de paginas
                             case 8:
                                 cout << "Ingrese el nuevo numero de paginas: " << endl << "> ";
                                 cin >> nNumeroPaginas;
+                                register_edit_book_pages_number(historial, biblioteca[i], to_string(nNumeroPaginas));
                                 biblioteca[i].setNumeroPaginas(nNumeroPaginas);
                                 break;
                             //Nueva cantidad de stock
                             case 9:
                                 cout << "Ingrese el nuevo numero de Stock: " << endl << "> ";
                                 cin >> nStock;
+                                register_edit_book_stock(historial, biblioteca[i], to_string(nStock));
                                 biblioteca[i].setStock(nStock);
                                 break;
                             //En caso de una opcion invalida

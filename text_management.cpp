@@ -47,55 +47,55 @@ void read_txt(vector<Libro>& biblioteca, string filename)
             /* Basicamente, leemos los datos del tipo de dato stringstream
                hasta alcanzar una coma, ahi, lo leido se almacena en 
                "titulo"*/
-            getline(ss, titulo, ',');
+            getline(ss, titulo, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "autor"
-            getline(ss, autor, ',');
+            getline(ss, autor, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "editorial"
-            getline(ss, editorial, ',');
+            getline(ss, editorial, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "anio_str"
-            getline(ss, anio_str, ',');
+            getline(ss, anio_str, ';');
 
             // Se convierte el string de anio a un entero y se almacena en "anio"
             anio = stoi(anio_str);
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "genero"
-            getline(ss, genero, ',');
+            getline(ss, genero, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "idioma"
-            getline(ss, idioma, ',');
+            getline(ss, idioma, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "id_str"
-            getline(ss, id_str, ',');
+            getline(ss, id_str, ';');
 
             // Se convierte el string de id a un entero y se almacena en "id"
             id = stoi(id_str);
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "paginas_str"
-            getline(ss, paginas_str, ',');
+            getline(ss, paginas_str, ';');
 
             // Se convierte el string de paginas a un entero y se almacena en "paginas"
             paginas = stoi(paginas_str);
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "stock_str"
-            getline(ss, stock_str, ',');
+            getline(ss, stock_str, ';');
 
             // Se convierte el string de stock a un entero y se almacena en "stock"
             stock = stoi(stock_str);
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "disponibilidad_str"
-            getline(ss, disponibilidad_str, ',');
+            getline(ss, disponibilidad_str, ';');
 
             if (disponibilidad_str == "1") {
                 disponibilidad = true;
@@ -103,7 +103,7 @@ void read_txt(vector<Libro>& biblioteca, string filename)
                 disponibilidad = false;
             }
 
-            getline(ss, libros_prestados_str, ',');
+            getline(ss, libros_prestados_str, ';');
             libros_prestados = stoi(libros_prestados_str);
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
@@ -139,7 +139,7 @@ void rewrite_txt(std::vector<Libro>& biblioteca, std::string filename)
     {
         int vector_user_length = biblioteca[i].getNombrePrestadoSize();
         // Construye una línea con el título, autor, editorial, año de publicación, género, idioma, id, número de páginas, stock y disponibilidad de cada libro
-        line = line + biblioteca[i].getTitulo() + "," + biblioteca[i].getAutor() + "," + biblioteca[i].getEditorial() + "," + to_string(biblioteca[i].getAnioDePublicacion()) + "," + biblioteca[i].getGenero() + "," + biblioteca[i].getIdioma() + "," + to_string(biblioteca[i].getId()) + "," + to_string(biblioteca[i].getNumeroPaginas()) + "," + to_string(biblioteca[i].getStock()) + "," + to_string(biblioteca[i].getDisponibilidad()) + "," + to_string(biblioteca[i].getLibrosPrestados()) + ",";
+        line = line + biblioteca[i].getTitulo() + ";" + biblioteca[i].getAutor() + ";" + biblioteca[i].getEditorial() + ";" + to_string(biblioteca[i].getAnioDePublicacion()) + ";" + biblioteca[i].getGenero() + ";" + biblioteca[i].getIdioma() + ";" + to_string(biblioteca[i].getId()) + ";" + to_string(biblioteca[i].getNumeroPaginas()) + ";" + to_string(biblioteca[i].getStock()) + ";" + to_string(biblioteca[i].getDisponibilidad()) + ";" + to_string(biblioteca[i].getLibrosPrestados()) + ";";
 
         // Recorremos el vector de los usuarion que han solicitado el libro y los vamos concatenando
         // a la linea que se escribira en el .txt
@@ -192,11 +192,11 @@ void read_users(vector<Usuario>& lista, string filename)
             /* Basicamente, leemos los datos del tipo de dato stringstream
                hasta alcanzar una coma, ahi, lo leido se almacena en 
                "nombre"*/
-            getline(ss, nombre, ',');
+            getline(ss, nombre, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // y se almacena en "rut"
-            getline(ss, rut, ',');
+            getline(ss, rut, ';');
 
             // Se sigue leyendo desde donde se quedó la última vez descartando la ","
             // el bucle revisa el resto de la línea y separa los libros solicitados
@@ -235,7 +235,7 @@ void rewrite_users(vector<Usuario>& lista, string filename)
     {
         int vector_libros_length = lista[i].getLibroSolicitadoSize();
         // Construye una línea con el nombre y rut del usuario
-        line = line + lista[i].getNombre() + "," + lista[i].getRut() + ",";
+        line = line + lista[i].getNombre() + ";" + lista[i].getRut() + ";";
 
         // Recorremos el vector de los libros que ha solicitado el usuario y los vamos concatenando
         // a la linea que se escribira en el .txt
@@ -323,6 +323,10 @@ void check_register()
 // Una función que recibe un vector que contiene strings y un objeto de tipo Libro
 void register_new_book(vector<string>& registro, Libro& libro)
 {
+    ofstream file;
+
+    file.open(get_current_date()+".txt", ios::app);
+
     // Se obtiene el titulo del libro
     string new_book = libro.getTitulo();
     string new_book_id = to_string(libro.getId());
@@ -336,13 +340,338 @@ void register_new_book(vector<string>& registro, Libro& libro)
 
     // Se añade la linea al vector de strings
     registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
 
 
 
 }
 
+void register_edit_book_title(vector<string>& registro, Libro& libro, string new_title)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el titulo del libro
+    string old_title = libro.getTitulo();
+    string book_id = to_string(libro.getId());
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo titulo: " + old_title + "\nNuevo titulo: " + new_title;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+
+}
+
+void register_edit_book_author(vector<string>& registro, Libro& libro, string new_author)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el autor del libro
+    string old_author = libro.getAutor();
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo autor: " + old_author + "\nNuevo autor: " + new_author;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_genre(vector<string>& registro, Libro& libro, string new_genre)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el genero del libro
+    string old_genre = libro.getGenero();
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo genero: " + old_genre + "\nNuevo genero: " + new_genre;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_language(vector<string>& registro, Libro& libro, string new_language)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el idioma del libro
+    string old_language = libro.getIdioma();
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo idioma: " + old_language + "\nNuevo idioma: " + new_language;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_id(vector<string>& registro, Libro& libro, string new_id)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el id del libro
+    string old_id = to_string(libro.getId());
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo ID: " + old_id + "\nNuevo ID: " + new_id;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_pages_number(vector<string>& registro, Libro& libro, string new_pages_number)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el número de páginas del libro
+    string old_pages_number = to_string(libro.getNumeroPaginas());
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo número de páginas: " + old_pages_number + "\nNuevo número de páginas: " + new_pages_number;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_publisher(vector<string>& registro, Libro& libro, string new_publisher)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene la editorial del libro
+    string old_publisher = libro.getEditorial();
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntigua editorial: " + old_publisher + "\nNueva editorial: " + new_publisher;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_release_year(vector<string>& registro, Libro& libro, string new_release_year)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el año de publicación del libro
+    string old_release_year = to_string(libro.getAnioDePublicacion());
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo año de publicación: " + old_release_year + "\nNuevo año de publicación: " + new_release_year;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_edit_book_stock(vector<string>& registro, Libro& libro, string new_stock)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el stock del libro
+    string old_stock = to_string(libro.getStock());
+    string book_id = to_string(libro.getId());
+    string book_title = libro.getTitulo();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el libro con ID \"" + book_id +"\" (" + book_title + ") a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo stock: " + old_stock + "\nNuevo stock: " + new_stock;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    // Se cierra el archivo
+    file.close();
+}
+
+void register_lend_book(vector<string>& registro, Libro& libro, string name)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el titulo del libro
+    string book_title = libro.getTitulo();
+    string book_id = to_string(libro.getId());
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha prestado el libro \"" + book_title + "\" con ID " + book_id + " a las " + get_current_hour() + " con fecha " + get_current_date() + " al usuario " + name + ".";
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}
+
+void register_virtual_lend_book(vector<string>& registro, Libro& libro, string name)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el titulo del libro
+    string book_title = libro.getTitulo()+" (Virtual)";
+    string book_id = to_string(libro.getId());
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha solicitado el libro \"" + book_title + "\" con ID " + book_id + " a las " + get_current_hour() + " con fecha " + get_current_date() + " por el usuario " + name + ".";
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}
+
+void register_return_book(vector<string>& registro, Libro& libro, string name)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el titulo del libro
+    string book_title = libro.getTitulo();
+    string book_id = to_string(libro.getId());
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha devuelto el libro \"" + book_title + "\" con ID " + book_id + " a las " + get_current_hour() + " con fecha " + get_current_date() + " por el usuario " + name + ".";
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}
+
+void register_virtual_return_book(vector<string>& registro, Libro& libro, string name)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el titulo del libro
+    string book_title = libro.getTitulo()+" (Virtual)";
+    string book_id = to_string(libro.getId());
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha devuelto el libro \"" + book_title + "\" con ID " + book_id + " a las " + get_current_hour() + " con fecha " + get_current_date() + " por el usuario " + name + ".";
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}
+
+
 void register_new_user(vector<string>& registro, Usuario& user)
 {
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+
     // Se obtiene el nombre del usuario
     string new_user = user.getNombre();
     string new_user_rut = user.getRut();
@@ -358,4 +687,6 @@ void register_new_user(vector<string>& registro, Usuario& user)
 
     // Se añade la linea al vector de strings
     registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
 }

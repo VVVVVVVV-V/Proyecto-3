@@ -1,3 +1,6 @@
-Cristobal Garrido,21.866.245-5,
-Isaac Choque,20.726.066-5,
-Pepito Perez,123,
+Cristobal Garrido;21.866.245-5;
+Isaac Choque;20.726.066-5;
+Pepito Perez;123;
+Sebastian Garrido;21.866.239-0;
+Yazmin Galleguillos;21.740.663-3;
+;;
