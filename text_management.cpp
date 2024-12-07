@@ -691,3 +691,49 @@ void register_new_user(vector<string>& registro, Usuario& user)
     file << line + "\n---------------------------------\n";
     file.close();
 }
+
+void register_edit_user_name(std::vector<std::string>& registro, Usuario& user, string new_name)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el nombre del usuario
+    string old_name = user.getNombre();
+    string rut = user.getRut();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el usuario con RUT \"" + rut +"\" a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo nombre: " + old_name + "\nNuevo nombre: " + new_name;
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}
+
+void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user)
+{
+    // Se abre el archivo con el nombre de la fecha de hoy
+    ofstream file;
+    file.open(get_current_date()+".txt", ios::app);
+
+    // Se obtiene el rut del usuario
+    string old_rut = user.getRut();
+    string name = user.getNombre();
+
+    // Se define un string para guardar la linea que se añadira al registro
+    string line;
+    
+    // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
+    // get_current_hour() que devuelve la hora actual en string
+    line = "Se ha editado el usuario con nombre \"" + name +"\" a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo RUT: " + old_rut + "\nNuevo RUT: " + user.getRut();
+
+    // Se añade la linea al vector de strings
+    registro.push_back(line);
+    file << line + "\n---------------------------------\n";
+    file.close();
+}

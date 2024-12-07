@@ -53,8 +53,8 @@ void register_edit_book_stock(std::vector<std::string>& registro, Libro& libro, 
 
 
 void register_new_user(std::vector<std::string>& registro, Usuario& user);
-void register_edit_user_name(std::vector<std::string>& registro, Usuario& user);
-void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user);
+void register_edit_user_name(std::vector<std::string>& registro, Usuario& user, std::string new_name);
+void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user, std::string new_rut);
 
 
 void register_lend_book(std::vector<std::string>& registro, Libro& libro, std::string name);

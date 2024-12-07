@@ -752,14 +752,18 @@ int main(int argc, char const *argv[])
                                 cout << "Ingrese el nuevo nombre de usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nNombreUsuario);
+                                register_edit_user_name(historial, usuarios[i], nNombreUsuario);
                                 usuarios[i].setNombre(nNombreUsuario);
+                                rewrite_users(usuarios, "usuarios.txt");
                                 break;
                             
                             case 2:
                                 cout << "Ingrese el nuevo rut del usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nRutUsuario);
+                                register_edit_user_rut(historial, usuarios[i], nRutUsuario);
                                 usuarios[i].setRut(nRutUsuario);
+                                rewrite_users(usuarios, "usuarios.txt");
                                 break;
 
                             default:
