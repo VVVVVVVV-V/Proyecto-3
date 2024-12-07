@@ -715,7 +715,7 @@ void register_edit_user_name(std::vector<std::string>& registro, Usuario& user, 
     file.close();
 }
 
-void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user)
+void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user, string new_rut)
 {
     // Se abre el archivo con el nombre de la fecha de hoy
     ofstream file;
@@ -730,8 +730,8 @@ void register_edit_user_rut(std::vector<std::string>& registro, Usuario& user)
     
     // Definimos el contenido del registro y le añadimos la hora utilizando la funcion
     // get_current_hour() que devuelve la hora actual en string
-    line = "Se ha editado el usuario con nombre \"" + name +"\" a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo RUT: " + old_rut + "\nNuevo RUT: " + user.getRut();
-
+    line = "Se ha editado el usuario con nombre \"" + name +"\" a las " + get_current_hour() + " con fecha " + get_current_date() + ":\nAntiguo RUT: " + old_rut + "\nNuevo RUT: " + new_rut;
+    
     // Se añade la linea al vector de strings
     registro.push_back(line);
     file << line + "\n---------------------------------\n";
