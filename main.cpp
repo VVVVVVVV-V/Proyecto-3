@@ -322,7 +322,7 @@ int main(int argc, char const *argv[])
                                     for(int j=0 ; j < usuarios[controlador_aux-1].getLibroSolicitadoSize(); j++)
                                     {
                                         //Si el usuario tiene registrado en sus prestamos el nombre del libro (virtual) tipo "Cartas en el Asunto (Virtual)" entonces se le pasara por pantalla que no puede alquilarlo y se terminara el for.
-                                        if(usuarios[controlador_aux-1].getLibroSolicitadoPorIndex(j)+" (Virtual)" == biblioteca[i].getTitulo()+" (Virtual)")
+                                        if(usuarios[controlador_aux-1].getLibroSolicitadoPorIndex(j) == biblioteca[i].getTitulo()+" (Virtual)")
                                         {
                                             cout << "Este usuario no puede pedir este libro porque ya tiene una copia de este en su poder." << endl;
                                             controlador_prestamo=false;
