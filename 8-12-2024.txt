@@ -1,0 +1,24 @@
+Se ha editado el usuario con RUT "" a las 22:51:29 con fecha 8-12-2024:
+Antiguo nombre: 
+Nuevo nombre: El Pepe Sech
+---------------------------------
+Se ha editado el usuario con nombre "El Pepe Sech" a las 22:51:41 con fecha 8-12-2024:
+Antiguo RUT: 
+Nuevo RUT: 12222222
+---------------------------------
+Se ha editado el usuario con RUT "12222222" a las 22:51:50 con fecha 8-12-2024:
+Antiguo nombre: El Pepe Sech
+Nuevo nombre: 
+---------------------------------
+Se ha editado el libro con ID "0" a las 22:52:20 con fecha 8-12-2024:
+Antiguo titulo: El Principito
+Nuevo titulo: 
+---------------------------------
+Se ha editado el libro con ID "0" a las 23:7:22 con fecha 8-12-2024:
+Antiguo titulo: El Principito
+Nuevo titulo: El Principito
+---------------------------------
+Se ha editado el usuario con RUT "21.866.245-5" a las 23:7:34 con fecha 8-12-2024:
+Antiguo nombre: Cristobal Garrido
+Nuevo nombre: Cristobal Garrido
+---------------------------------

@@ -58,7 +58,7 @@ void mostrarBibliotecaConStock(vector<Libro> nombreVector)
 
         for (int i = 0; i < nombreVector.size(); i++)
         {
-            if(nombreVector[i].getStock() > 0) cout << i+1 << ") " << nombreVector[i].getTitulo() << " ; Id: "<< nombreVector[i].getId() <<endl;
+            if(nombreVector[i].getStock() > 0) cout << i+1 << ") " << nombreVector[i].getTitulo() << endl;
         }
     }
     else cout << "No hay elementos que mostrar..." << endl;
@@ -92,19 +92,6 @@ void mostrarUsuariosPrestados(vector<Usuario> nombreVector)
         }
     }
     else if(aux == false) cout << "No hay elementos que mostrar..." << endl;
-}
-
-void editarLibro(Libro libro, string nTitulo, string nAutor, string nEditorial, int nAnioDePublicacion, string nGenero, string nIdioma, int nId, int nNumeroPaginas, int nStock)
-{
-    libro.setTitulo(nTitulo);
-    libro.setAutor(nAutor);
-    libro.setEditorial(nEditorial);
-    libro.setAnioDePublicacion(nAnioDePublicacion);
-    libro.setGenero(nGenero);
-    libro.setIdioma(nIdioma);
-    libro.setId(nId);
-    libro.setNumeroPaginas(nNumeroPaginas);
-    libro.setStock(nStock);
 }
 
 int main(int argc, char const *argv[])
@@ -158,7 +145,7 @@ int main(int argc, char const *argv[])
         cout << "---------------------------------------------" << endl;
         cout << "1) Agregar Libros." << endl << "2) Agregar Usuario." << endl << "3) Prestar Libro." << endl << "4) Devolver libro." << endl << "5) Ver la lista de libros." << endl << "6) Ver la lista de usuarios." << endl << "7) Ver detalles de un libro." << endl << "8) Ver detalles de un usuario." << endl << "9) Buscar un libro." << endl << "10) Buscar un usuario." << endl << "11) Editar Libros." << endl << "12) Editar usuarios." << endl << "13) Mostrar el registro de auditoria. " << endl << "14) Guardar y salir." << endl << "> ";
         cin >> controlador;
-        //controla si es que en el controlador ingresan texto
+        //Controla si es que en el controlador ingresan texto
         if (cin.fail())
         {
             cin.clear();
@@ -168,7 +155,7 @@ int main(int argc, char const *argv[])
         limpiarPantalla();
         //Usar un switch tiraba errores al instanciar un objeto, asi que toco usar puro if
         
-        //Agregar libros.
+        //AGREGAR LIBROS.
         if(controlador == 1)
         {
             //Pedir los parametros para instanciar un objeto Libro.
@@ -194,12 +181,19 @@ int main(int argc, char const *argv[])
             cin >> nStock;
             cout << endl << "Ingrese el anio de publicacion del libro: ";
             cin >> nAnioDePublicacion;
-
+            //Si es que algun valor no es valido se le avisara al usuario, de otra forma podrian haber errores en la generacion de los libros.
+            if(nTitulo.empty() || nAutor.empty() || nEditorial.empty() || nGenero.empty() || nIdioma.empty() || nId < 0 || nNumeroPaginas < 0 || nStock < 0 || nAnioDePublicacion < 0)
+            {
+                cout << "Algun valor ingresado es invalido, vuelva a intentarlo." << endl;
+            } 
             //instanciacion del libro y añadir a la lista.
-            Libro libro(nTitulo, nAutor, nEditorial, nAnioDePublicacion, nGenero, nIdioma, nId, nNumeroPaginas, nStock, true, 0, {});
-            biblioteca.push_back(libro);
-            register_new_book(historial, biblioteca.back());
-            rewrite_txt(biblioteca, "libros.txt");
+            else
+            {
+                Libro libro(nTitulo, nAutor, nEditorial, nAnioDePublicacion, nGenero, nIdioma, nId, nNumeroPaginas, nStock, true, 0, {});
+                biblioteca.push_back(libro);
+                register_new_book(historial, biblioteca.back());
+                rewrite_txt(biblioteca, "libros.txt");
+            }
             pulsaEnter();
         }
 
@@ -211,17 +205,24 @@ int main(int argc, char const *argv[])
             getline(cin, nNombreUsuario);
             cout << endl << "Ingrese el rut del usuario: ";
             getline(cin, nRutUsuario);
-
+            //Si es que algun valor ingresado por el usuario no es valido se le avisara al usuario, de otra forma podria ingresar strings vacios.
+            if(nNombreUsuario.empty() || nRutUsuario.empty())
+            {
+                cout << "Algun valor ingresado no es valido, vuelva a intentarlo." << endl;
+            }
             //Intanciacion del usuario y añadir a la lista.
-            Usuario nuevousuario(nNombreUsuario, nRutUsuario, {});
-            usuarios.push_back(nuevousuario);
-            register_new_user(historial, usuarios.back());
-            rewrite_users(usuarios, "usuarios.txt");
+            else
+            {
+                Usuario nuevousuario(nNombreUsuario, nRutUsuario, {});
+                usuarios.push_back(nuevousuario);
+                register_new_user(historial, usuarios.back());
+                rewrite_users(usuarios, "usuarios.txt");
+            }
+            
             pulsaEnter();
 
         }
 
-        //
         //PRESTAR LIBROS
         else if(controlador == 3)
         {
@@ -250,6 +251,7 @@ int main(int argc, char const *argv[])
                         if(controlador_aux == 1)
                         {
                             limpiarPantalla();
+                            //Muestra opciones con los respectivos usuarios en pantalla.
                             mostrarUsuarios(usuarios);
                             //Pregunta quien quiere pedir prestado el libro
                             cout << endl << "Que usuario desea pedir prestado este libro?" << endl << "> ";
@@ -370,6 +372,10 @@ int main(int argc, char const *argv[])
             pulsaEnter();
         }
 
+        //Ya habiendo terminado el programa, puede ser que esta funcion haya sido mas facil de implementar si es que en vez de buscar un usuario y seleccionarlo de una lista (que en caso de haber registrado muchos usuarios seria realmente incomodo y tedioso de usar) podria haber hecho que se buscara por nombre o rut, y en ese caso tambien podria optimizar ese proceso volviendo eso una funcion ya que lo podria usar aqui y en buscar los detalles, siento que hay mucho que podria haber sido mejor optimizado, pero asi es como quedo y creo que funciona y estoy feliz por eso. 
+        
+        /* --GNU Terry Pratchett */
+
         //DEVOLVER LIBROS
         else if(controlador == 4)
         {
@@ -462,7 +468,7 @@ int main(int argc, char const *argv[])
 
 
 
-        //Mostrar libros en biblioteca
+        //MOSTRAR LIBROS EN LA BIBLIOTECA
         else if(controlador == 5)
         {
             mostrarBiblioteca(biblioteca);
@@ -470,7 +476,7 @@ int main(int argc, char const *argv[])
         }
         
 
-        //Mostrar usuarios registrados.
+        //MOSTRAR LOS USUARIOS REGISTRADOS
         else if(controlador == 6)
         {
             mostrarUsuarios(usuarios);
@@ -478,7 +484,7 @@ int main(int argc, char const *argv[])
         }
 
 
-        //Verificar detalles de un libro en la lista.
+        //VERIFICAR DETALLES DE UN LIBRO EN LA LISTA
         else if(controlador == 7)
         {
             //Si el vector biblioteca tiene algun elemento
@@ -500,7 +506,7 @@ int main(int argc, char const *argv[])
         }
 
 
-        //Verificar detalles de un usuario en la lista.
+        //VERIFICAR DETALLES DE UN USUARIO DE LA LISTA
         else if(controlador == 8)
         {
             //Si es que la lista de usuarios tiene al menos un elemento.
@@ -525,7 +531,7 @@ int main(int argc, char const *argv[])
         }
 
 
-        //Buscar un libro especifico.
+        //BUSCAR UN LIBRO ESPECIFICO POR NOMBRE
         else if(controlador == 9)
         {
             //Si es que biblioteca tiene algun elemento
@@ -556,31 +562,64 @@ int main(int argc, char const *argv[])
             
         }
 
-        //Buscar detalles de un usuario por nombre
+        //BUSCAR DETALLES DE UN USUARIO POR NOMBRE O RUT
         else if(controlador == 10)
         {
             //Si es que la lista de usuarios tiene algun elemento
             if(!usuarios.empty())
             {
-                cout << "Ingrese el nombre del usuario que desea buscar: " << endl << " >";
-                cin.get();
-                getline(cin, nombreGenericoParaBuscar);
-                //Se define un controlador auxiliar a 0, puesto que si no se encuentran coincidencias lo mostara en pantalla.
-                controlador_aux=0;
-                //Busca en la lista de usuarios coincidencias usando el nombre ingresado.
-                for (int i = 0; i < usuarios.size(); i++)
+                cout << "Seleccione una de las opciones:" << endl << "1) Buscar por nombre." << endl << "2) Buscar por rut." << endl << "> ";
+                cin >> controlador_aux;
+                //Si se elige buscar por nombre se le pedira al usuario que ingrese el nombre que desea buscar y se inicializara un bucle, dentro de este bucle se revisara cada nombre de cada elemento en la lista usuario, si alguno coincide con este mostrara su informacion.
+                if(controlador_aux == 1)
                 {
-                    if(usuarios[i].getNombre() == nombreGenericoParaBuscar)
+                    limpiarPantalla();
+                    cout << "Ingrese el nombre del usuario que desea buscar: " << endl << " > ";
+                    cin.get();
+                    getline(cin, nombreGenericoParaBuscar);
+                    //Se define un controlador auxiliar a 0, puesto que si no se encuentran coincidencias lo mostara en pantalla.
+                    controlador_aux=0;
+                    limpiarPantalla();
+                    //Busca en la lista de usuarios coincidencias usando el nombre ingresado.
+                    for (int i = 0; i < usuarios.size(); i++)
                     {
-                        //Muestra la informacion y cambia un controlador a 1, si fuese 0 se mostraria en pantalla que no hay coincidencias.
-                        usuarios[i].mostrarInformacion();
-                        controlador_aux=1;
+                        if(usuarios[i].getNombre() == nombreGenericoParaBuscar)
+                        {
+                            //Muestra la informacion y cambia un controlador a 1, si fuese 0 se mostraria en pantalla que no hay coincidencias.
+                            usuarios[i].mostrarInformacion();
+                            controlador_aux=1;
+                        }
+                    }
+                    if(controlador_aux != 1)
+                    {
+                        cout << "No se han encontrado coincidencias..." << endl;
                     }
                 }
-                if(controlador_aux != 1)
+                //Si el usuario elige buscar por rut se hara exactamente lo mismo, sin embargo se mostrara un mensaje diferente.
+                else if(controlador_aux == 2)
                 {
-                    cout << "No se han encontrado coincidencias..." << endl;
+                    limpiarPantalla();
+                    cout << "Ingrese el rut del usuario que desea buscar: " << endl << "> ";
+                    cin.get();
+                    getline(cin, nombreGenericoParaBuscar);
+                    controlador_aux=0;
+                    limpiarPantalla();
+                    for(int i=0; i < usuarios.size(); i++)
+                    {
+                        if(usuarios[i].getRut() == nombreGenericoParaBuscar)
+                        {
+                            //Muestra la informacion y cambia el controlador a 1.
+                            usuarios[i].mostrarInformacion();
+                            controlador_aux=1;
+                        }
+                    }
+                    if(controlador_aux != 1)
+                    {
+                        cout << "No se han encontrado coincidencias..." << endl;
+                    }
                 }
+                else cout << "Seleccione una opcion valida." << endl;
+                
             }
             //Si la lista no tiene elementos muestra en pantalla que no hay usuarios registrados.
             else cout << "No hay usuarios registrados." << endl;
@@ -590,7 +629,7 @@ int main(int argc, char const *argv[])
         //EDITAR LIBROS
         else if(controlador == 11)
         {
-            //Si es que la biblioteca no esta vacia.
+            //Si es que la biblioteca no esta vacia se recorrera esta lista y se mostara una lista de todos los libros que no han sido prestados a nadie, puesto que si el libro esta prestado no va a ser posible imprimirlo.
             if(!biblioteca.empty())
             {
                 //Recorrer la lista de la biblioteca e imprimir los libros que no han sido prestados a nadie.
@@ -606,7 +645,7 @@ int main(int argc, char const *argv[])
                         controlador_aux=1;
                     }
                 }
-                //Si hay libros que no han sido prestados se entrara al menu.
+                //Si hay libros que no han sido prestados se entrara al menu, este menu pedira al usuario que ingrese el nombre del libro que desea editar, seguido de esto si es que el nombre coincide con algun nombre de algun libro registrado se accedera a un menu para editar cualquier atributo de forma individual de los libros.
                 if(controlador_aux=1)
                 {
                     cout << "Ingrese el libro que desea editar (ingrese su nombre): " << endl << "> ";
@@ -630,73 +669,101 @@ int main(int argc, char const *argv[])
                             case 1:
                                 cout << "Ingrese el nuevo titulo: " << endl << "> ";
                                 getline(cin, nTitulo);
-                                register_edit_book_title(historial, biblioteca[i], nTitulo);
-                                biblioteca[i].setTitulo(nTitulo);
+                                if(!nTitulo.empty())
+                                {
+                                    register_edit_book_title(historial, biblioteca[i], nTitulo);
+                                    biblioteca[i].setTitulo(nTitulo);
+                                }
                                 break;
                             //Nuevo autor
                             case 2:
                                 cout << "Ingrese el nuevo autor: " << endl << "> ";
                                 getline(cin, nAutor);
-                                register_edit_book_author(historial, biblioteca[i], nAutor);
-                                biblioteca[i].setAutor(nAutor);
+                                if(!nAutor.empty())
+                                {
+                                    register_edit_book_author(historial, biblioteca[i], nAutor);
+                                    biblioteca[i].setAutor(nAutor);
+                                }
                                 break;
                             //Nueva editorial
                             case 3:
                                 cout << "Ingrese la nueva Editorial: " << endl << "> ";
                                 getline(cin, nEditorial);
-                                register_edit_book_publisher(historial, biblioteca[i], nEditorial);
-                                biblioteca[i].setEditorial(nEditorial);
+                                if(!nEditorial.empty())
+                                {
+                                    register_edit_book_publisher(historial, biblioteca[i], nEditorial);
+                                    biblioteca[i].setEditorial(nEditorial);
+                                }
                                 break;
                             //Nuevo Anio de publicacion
                             case 4:
                                 cout << "Ingrese el nuevo anio de publicacion: " << endl << "> ";
                                 cin >> nAnioDePublicacion;
-                                register_edit_book_release_year(historial, biblioteca[i], to_string(nAnioDePublicacion));
-                                biblioteca[i].setAnioDePublicacion(nAnioDePublicacion);
+                                if(nAnioDePublicacion >= 0)
+                                {
+                                    register_edit_book_release_year(historial, biblioteca[i], to_string(nAnioDePublicacion));
+                                    biblioteca[i].setAnioDePublicacion(nAnioDePublicacion);
+                                }
                                 break;
                             //Nuevo genero
                             case 5:
                                 cout << "Ingrese el nuevo genero: " << endl << "> ";
                                 getline(cin, nGenero);
-                                register_edit_book_genre(historial, biblioteca[i], nGenero);
-                                biblioteca[i].setGenero(nGenero);
+                                if(!nGenero.empty())
+                                {
+                                    register_edit_book_genre(historial, biblioteca[i], nGenero);
+                                    biblioteca[i].setGenero(nGenero);
+                                }
                                 break;
                             //Nuevo idioma
                             case 6:
                                 cout << "Ingrese el nuevo idioma: " << endl << "> ";
                                 getline(cin, nIdioma);
-                                register_edit_book_language(historial, biblioteca[i], nIdioma);
-                                biblioteca[i].setIdioma(nIdioma);
+                                if(!nIdioma.empty())
+                                {
+                                    register_edit_book_language(historial, biblioteca[i], nIdioma);
+                                    biblioteca[i].setIdioma(nIdioma);
+                                }
                                 break;
                             //Nuevo ID
                             case 7:
                                 cout << "Ingrese el nuevo Id: " << endl << "> ";
                                 cin >> nId;
-                                register_edit_book_id(historial, biblioteca[i], to_string(nId));
-                                biblioteca[i].setId(nId);
+                                if(nId >= 0)
+                                {
+                                    register_edit_book_id(historial, biblioteca[i], to_string(nId));
+                                    biblioteca[i].setId(nId);
+                                }
                                 break;
                             //Nuevo numero de paginas
                             case 8:
                                 cout << "Ingrese el nuevo numero de paginas: " << endl << "> ";
                                 cin >> nNumeroPaginas;
-                                register_edit_book_pages_number(historial, biblioteca[i], to_string(nNumeroPaginas));
-                                biblioteca[i].setNumeroPaginas(nNumeroPaginas);
+                                if(nNumeroPaginas > 0)
+                                {
+                                    register_edit_book_pages_number(historial, biblioteca[i], to_string(nNumeroPaginas));
+                                    biblioteca[i].setNumeroPaginas(nNumeroPaginas);
+                                }
                                 break;
                             //Nueva cantidad de stock
                             case 9:
                                 cout << "Ingrese el nuevo numero de Stock: " << endl << "> ";
                                 cin >> nStock;
-                                register_edit_book_stock(historial, biblioteca[i], to_string(nStock));
-                                biblioteca[i].setStock(nStock);
+                                if(nStock > 0)
+                                {
+                                    register_edit_book_stock(historial, biblioteca[i], to_string(nStock));
+                                    biblioteca[i].setStock(nStock);
+                                }
                                 break;
                             //En caso de una opcion invalida
                             default:
                                 cout << "Opcion invalida, saliendo del menu." << endl;
                                 break;
                             
+                            }
+                            //Controlador auxiliar = 1 sin motivo aparente.
                             controlador_aux=1;
                             rewrite_txt(biblioteca, "libros.txt");
-                            }
                         }
                     }
                 }
@@ -733,6 +800,7 @@ int main(int argc, char const *argv[])
                         controlador_aux=1;
                     }
                 }
+                //Si hay usuarios registrados hara exactamente lo mismo que editar libros.
                 if(controlador_aux=1)
                 {
                     cout << "Ingrese el usuario que desea editar (ingrese su nombre): " << endl << "> ";
@@ -746,32 +814,39 @@ int main(int argc, char const *argv[])
                             limpiarPantalla();
                             cout << "Usuario encontrado!" << endl << "-------------------------" << endl << "1) Editar nombre" << endl << "2) Editar rut" << endl << "> ";
                             cin >> controlador_aux;
+                            limpiarPantalla();
                             switch (controlador_aux)
                             {
                             case 1:
                                 cout << "Ingrese el nuevo nombre de usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nNombreUsuario);
-                                register_edit_user_name(historial, usuarios[i], nNombreUsuario);
-                                usuarios[i].setNombre(nNombreUsuario);
-                                rewrite_users(usuarios, "usuarios.txt");
+                                if(!nNombreUsuario.empty())
+                                {
+                                    register_edit_user_name(historial, usuarios[i], nNombreUsuario);
+                                    usuarios[i].setNombre(nNombreUsuario);
+                                }
                                 break;
                             
                             case 2:
                                 cout << "Ingrese el nuevo rut del usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nRutUsuario);
-                                register_edit_user_rut(historial, usuarios[i], nRutUsuario);
-                                usuarios[i].setRut(nRutUsuario);
-                                rewrite_users(usuarios, "usuarios.txt");
+                                if(!nRutUsuario.empty())
+                                {
+                                    register_edit_user_rut(historial, usuarios[i], nRutUsuario);
+                                    usuarios[i].setRut(nRutUsuario);
+                                }
                                 break;
 
                             default:
                                 cout << "Opcion invalida, saliendo del menu..." << endl;
                                 break;
+                            
+                            }
+                            //Controlador auxiliar = 1 sin motivo aparente.
                             controlador_aux=1;
                             rewrite_users(usuarios, "usuarios.txt");
-                            }
                         }
                     }
                     
@@ -795,11 +870,14 @@ int main(int argc, char const *argv[])
         {
             if(!historial.empty())
             {
+                //Muestra la lista del registro de auditoria si es que la lista no esta vacia.
                 for (int i = 0; i < historial.size(); i++)
                 {
                     cout << historial[i] << endl;
                 }
             }
+            //Si la lista esta vacia dice que no hay registros.
+            //Si, eso es todo, ¿Que pensabas que era muy complicado? Anda a revisar el text_management.cpp si quieres ver algo complicado.
             else cout << "No hay registros..." << endl;
             pulsaEnter();
         }
