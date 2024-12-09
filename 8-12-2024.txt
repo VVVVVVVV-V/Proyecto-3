@@ -22,3 +22,5 @@ Se ha editado el usuario con RUT "21.866.245-5" a las 23:7:34 con fecha 8-12-202
 Antiguo nombre: Cristobal Garrido
 Nuevo nombre: Cristobal Garrido
 ---------------------------------
+Se ha registrado el usuario "     " con RUT       a las 23:41:37 con fecha 8-12-2024
+---------------------------------

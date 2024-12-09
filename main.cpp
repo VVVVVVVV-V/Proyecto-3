@@ -94,6 +94,31 @@ void mostrarUsuariosPrestados(vector<Usuario> nombreVector)
     else if(aux == false) cout << "No hay elementos que mostrar..." << endl;
 }
 
+bool depurarEspacios(string texto)
+{
+    //Elimina los espacios de una cadena de texto, si esta vacia devuelve un false, si aun asi tiene texto devuelve true.
+    string auxiliar = texto;
+    if(!texto.empty())
+    {
+        //Remove mueve todos los espacios hasta el final de la cadena, dejando la "basura" por asi decirlo al final, luego retorna la posicion en la que aun hay texto "no basura", para que despues todo ese texto basura sea eliminado por la funcion erase.
+        //El espacio debe ser tratado con ' ' en vez de " " ya que en este caso se busca un caracter definido por ' ', no una cadena de texto definida por " "
+        texto.erase(remove(texto.begin(), texto.end(), ' '), texto.end());
+        
+        if(texto.empty())
+        {
+            texto=auxiliar;
+            return(false);
+        }
+        
+        else
+        {
+            texto=auxiliar;
+            return(true);
+        }
+    }
+    else return(false);
+}
+
 int main(int argc, char const *argv[])
 {
     // Verificamos que exista un archivo de texto con la fecha de hoy, si no existe lo creamos.
@@ -182,7 +207,7 @@ int main(int argc, char const *argv[])
             cout << endl << "Ingrese el anio de publicacion del libro: ";
             cin >> nAnioDePublicacion;
             //Si es que algun valor no es valido se le avisara al usuario, de otra forma podrian haber errores en la generacion de los libros.
-            if(nTitulo.empty() || nAutor.empty() || nEditorial.empty() || nGenero.empty() || nIdioma.empty() || nId < 0 || nNumeroPaginas < 0 || nStock < 0 || nAnioDePublicacion < 0)
+            if(!depurarEspacios(nTitulo) || !depurarEspacios(nAutor) || !depurarEspacios(nEditorial) || !depurarEspacios(nGenero) || !depurarEspacios(nIdioma) || nId < 0 || nNumeroPaginas < 0 || nStock < 0 || nAnioDePublicacion < 0)
             {
                 cout << "Algun valor ingresado es invalido, vuelva a intentarlo." << endl;
             } 
@@ -206,7 +231,7 @@ int main(int argc, char const *argv[])
             cout << endl << "Ingrese el rut del usuario: ";
             getline(cin, nRutUsuario);
             //Si es que algun valor ingresado por el usuario no es valido se le avisara al usuario, de otra forma podria ingresar strings vacios.
-            if(nNombreUsuario.empty() || nRutUsuario.empty())
+            if(!depurarEspacios(nNombreUsuario) || !depurarEspacios(nRutUsuario))
             {
                 cout << "Algun valor ingresado no es valido, vuelva a intentarlo." << endl;
             }
@@ -496,6 +521,7 @@ int main(int argc, char const *argv[])
                 cin >> controlador_aux;
                 if(controlador_aux <= biblioteca.size() && controlador_aux > 0)
                 {
+                    limpiarPantalla();
                     biblioteca[controlador_aux-1].mostrarInformacion();
                     controlador_aux=0;
                 }
@@ -518,6 +544,7 @@ int main(int argc, char const *argv[])
                 cin >> controlador_aux;
                 if(controlador_aux <= usuarios.size() && controlador_aux > 0)
                 {
+                    limpiarPantalla();
                     usuarios[controlador_aux-1].mostrarInformacion();
                     controlador=0;
                 }
@@ -669,7 +696,7 @@ int main(int argc, char const *argv[])
                             case 1:
                                 cout << "Ingrese el nuevo titulo: " << endl << "> ";
                                 getline(cin, nTitulo);
-                                if(!nTitulo.empty())
+                                if(!nTitulo.empty() && depurarEspacios(nTitulo))
                                 {
                                     register_edit_book_title(historial, biblioteca[i], nTitulo);
                                     biblioteca[i].setTitulo(nTitulo);
@@ -679,7 +706,7 @@ int main(int argc, char const *argv[])
                             case 2:
                                 cout << "Ingrese el nuevo autor: " << endl << "> ";
                                 getline(cin, nAutor);
-                                if(!nAutor.empty())
+                                if(!nAutor.empty() && depurarEspacios(nAutor))
                                 {
                                     register_edit_book_author(historial, biblioteca[i], nAutor);
                                     biblioteca[i].setAutor(nAutor);
@@ -689,7 +716,7 @@ int main(int argc, char const *argv[])
                             case 3:
                                 cout << "Ingrese la nueva Editorial: " << endl << "> ";
                                 getline(cin, nEditorial);
-                                if(!nEditorial.empty())
+                                if(!nEditorial.empty() && depurarEspacios(nEditorial))
                                 {
                                     register_edit_book_publisher(historial, biblioteca[i], nEditorial);
                                     biblioteca[i].setEditorial(nEditorial);
@@ -709,7 +736,7 @@ int main(int argc, char const *argv[])
                             case 5:
                                 cout << "Ingrese el nuevo genero: " << endl << "> ";
                                 getline(cin, nGenero);
-                                if(!nGenero.empty())
+                                if(!nGenero.empty() && depurarEspacios(nGenero))
                                 {
                                     register_edit_book_genre(historial, biblioteca[i], nGenero);
                                     biblioteca[i].setGenero(nGenero);
@@ -719,7 +746,7 @@ int main(int argc, char const *argv[])
                             case 6:
                                 cout << "Ingrese el nuevo idioma: " << endl << "> ";
                                 getline(cin, nIdioma);
-                                if(!nIdioma.empty())
+                                if(!nIdioma.empty() && depurarEspacios(nIdioma))
                                 {
                                     register_edit_book_language(historial, biblioteca[i], nIdioma);
                                     biblioteca[i].setIdioma(nIdioma);
@@ -821,7 +848,7 @@ int main(int argc, char const *argv[])
                                 cout << "Ingrese el nuevo nombre de usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nNombreUsuario);
-                                if(!nNombreUsuario.empty())
+                                if(!nNombreUsuario.empty() && depurarEspacios(nNombreUsuario))
                                 {
                                     register_edit_user_name(historial, usuarios[i], nNombreUsuario);
                                     usuarios[i].setNombre(nNombreUsuario);
@@ -832,7 +859,7 @@ int main(int argc, char const *argv[])
                                 cout << "Ingrese el nuevo rut del usuario: " << endl << "> ";
                                 cin.get();
                                 getline(cin, nRutUsuario);
-                                if(!nRutUsuario.empty())
+                                if(!nRutUsuario.empty() && depurarEspacios(nRutUsuario))
                                 {
                                     register_edit_user_rut(historial, usuarios[i], nRutUsuario);
                                     usuarios[i].setRut(nRutUsuario);
