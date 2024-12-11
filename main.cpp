@@ -214,8 +214,15 @@ int main(int argc, char const *argv[])
             //instanciacion del libro y añadir a la lista.
             else
             {
-                Libro libro(nTitulo, nAutor, nEditorial, nAnioDePublicacion, nGenero, nIdioma, nId, nNumeroPaginas, nStock, true, 0, {});
-                biblioteca.push_back(libro);
+                if(nStock == 0) {
+                    Libro libro(nTitulo, nAutor, nEditorial, nAnioDePublicacion, nGenero, nIdioma, nId, nNumeroPaginas, nStock, false, 0, {});
+                    biblioteca.push_back(libro);
+                } 
+                else 
+                {
+                    Libro libro(nTitulo, nAutor, nEditorial, nAnioDePublicacion, nGenero, nIdioma, nId, nNumeroPaginas, nStock, true, 0, {});
+                    biblioteca.push_back(libro);
+                }
                 register_new_book(historial, biblioteca.back());
                 rewrite_txt(biblioteca, "libros.txt");
             }
